@@ -19,6 +19,7 @@
 		22CFBAF7187AFF1E0066E891 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CFBADF187AFF1E0066E891 /* UIKit.framework */; };
 		22CFBAFF187AFF1E0066E891 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22CFBAFD187AFF1E0066E891 /* InfoPlist.strings */; };
 		22CFBB01187AFF1E0066E891 /* GameControllerExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CFBB00187AFF1E0066E891 /* GameControllerExampleTests.m */; };
+		22CFBB0D187B01200066E891 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CFBB0C187B01200066E891 /* GameController.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		22CFBAFC187AFF1E0066E891 /* GameControllerExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GameControllerExampleTests-Info.plist"; sourceTree = "<group>"; };
 		22CFBAFE187AFF1E0066E891 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		22CFBB00187AFF1E0066E891 /* GameControllerExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameControllerExampleTests.m; sourceTree = "<group>"; };
+		22CFBB0C187B01200066E891 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22CFBB0D187B01200066E891 /* GameController.framework in Frameworks */,
 				22CFBADE187AFF1E0066E891 /* CoreGraphics.framework in Frameworks */,
 				22CFBAE0187AFF1E0066E891 /* UIKit.framework in Frameworks */,
 				22CFBADC187AFF1E0066E891 /* Foundation.framework in Frameworks */,
@@ -96,6 +99,7 @@
 		22CFBADA187AFF1E0066E891 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				22CFBB0C187B01200066E891 /* GameController.framework */,
 				22CFBADB187AFF1E0066E891 /* Foundation.framework */,
 				22CFBADD187AFF1E0066E891 /* CoreGraphics.framework */,
 				22CFBADF187AFF1E0066E891 /* UIKit.framework */,
@@ -442,6 +446,7 @@
 				22CFBB06187AFF1E0066E891 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		22CFBB07187AFF1E0066E891 /* Build configuration list for PBXNativeTarget "GameControllerExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -450,6 +455,7 @@
 				22CFBB09187AFF1E0066E891 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
