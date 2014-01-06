@@ -7,6 +7,7 @@
 //
 
 #import "GCEAppDelegate.h"
+#import "GCEGameViewController.h"
 
 @implementation GCEAppDelegate
 
@@ -15,6 +16,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    GCEGameViewController *gameViewController = [[GCEGameViewController alloc] init];
+    [self.window setRootViewController:gameViewController];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
