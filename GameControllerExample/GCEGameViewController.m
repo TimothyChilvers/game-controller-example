@@ -13,6 +13,9 @@
 
 @property (nonatomic,strong) NSArray *platformViews;
 @property (nonatomic,strong) UIDynamicAnimator *animator;
+@property (nonatomic,strong) UILabel *playerCharacter;
+@property (nonatomic,strong) UIGravityBehavior *gravityBehaviour;
+@property (nonatomic,strong) UICollisionBehavior *collisionBehaviour;
 
 @end
 
@@ -28,7 +31,7 @@ const CGFloat platformInsetFromEdges = 22.0f;
     
     [self setupPlatformViews];
     [self setupEnvironmentPhysicsBehaviours];
-    
+    [self setupPlayerCharacter];
 }
 
 - (void)setupPlatformViews {
@@ -60,18 +63,30 @@ const CGFloat platformInsetFromEdges = 22.0f;
 
 - (void)setupEnvironmentPhysicsBehaviours {
     
-    UIGravityBehavior *gravity = [[UIGravityBehavior alloc] initWithItems:self.platformViews];
+    self.gravityBehaviour = [[UIGravityBehavior alloc] initWithItems:self.platformViews];
     
     
-    UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:self.platformViews];
-    collision.collisionMode = UICollisionBehaviorModeEverything;
-    collision.translatesReferenceBoundsIntoBoundary = YES;
+    self.collisionBehaviour = [[UICollisionBehavior alloc] initWithItems:self.platformViews];
+    self.collisionBehaviour.collisionMode = UICollisionBehaviorModeEverything;
+    self.collisionBehaviour.translatesReferenceBoundsIntoBoundary = YES;
     
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     
-    [self.animator addBehavior:collision];
-    [self.animator addBehavior:gravity];
+    [self.animator addBehavior:self.collisionBehaviour];
+    [self.animator addBehavior:self.gravityBehaviour];
     
+}
+
+- (void)setupPlayerCharacter {
+    
+    self.playerCharacter = [[UILabel alloc] init];
+    self.playerCharacter.text = @"Jeff";
+    [self.playerCharacter sizeToFit];
+    self.playerCharacter.backgroundColor = [UIColor greenColor];
+    [self.view addSubview:self.playerCharacter];
+
+    [self.gravityBehaviour addItem:self.playerCharacter];
+    [self.collisionBehaviour addItem:self.playerCharacter];
 }
 
 @end
