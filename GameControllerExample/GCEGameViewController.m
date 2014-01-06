@@ -12,6 +12,7 @@
 @interface GCEGameViewController ()
 
 @property (nonatomic,strong) NSArray *platformViews;
+@property (nonatomic,strong) UIDynamicAnimator *animator;
 
 @end
 
@@ -26,6 +27,8 @@ const CGFloat platformInsetFromEdges = 22.0f;
     [super viewDidLoad];
     
     [self setupPlatformViews];
+    [self setupEnvironmentPhysicsBehaviours];
+    
 }
 
 - (void)setupPlatformViews {
@@ -53,6 +56,22 @@ const CGFloat platformInsetFromEdges = 22.0f;
         platformView.backgroundColor = color;
     }
     self.platformViews = [NSArray arrayWithArray:tempPlatformViews];
+}
+
+- (void)setupEnvironmentPhysicsBehaviours {
+    
+    UIGravityBehavior *gravity = [[UIGravityBehavior alloc] initWithItems:self.platformViews];
+    
+    
+    UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:self.platformViews];
+    collision.collisionMode = UICollisionBehaviorModeEverything;
+    collision.translatesReferenceBoundsIntoBoundary = YES;
+    
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    
+    [self.animator addBehavior:collision];
+    [self.animator addBehavior:gravity];
+    
 }
 
 @end
