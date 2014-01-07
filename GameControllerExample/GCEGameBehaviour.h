@@ -10,4 +10,10 @@
 
 @interface GCEGameBehaviour : NSObject
 
+-(void)playerJump;
+-(void)playerForceX:(CGFloat)forceX;
+
+- (void)setupEnvironmentPhysicsBehavioursInView:(UIView *)referenceView withPlatforms:(NSArray *)platformViews playerView:(UIView *)playerView;
+- (void)setupActionsForCharacterView:(UIView *)characterView;
+
 @end
