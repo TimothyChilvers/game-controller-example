@@ -58,6 +58,8 @@
         
         [gameBehaviour playerForceX:xValue];
     };
+    
+    controller.extendedGamepad.leftThumbstick.valueChangedHandler = dpad.valueChangedHandler;
 }
 
 @end
