@@ -23,6 +23,7 @@
 		22CFBB01187AFF1E0066E891 /* GameControllerExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CFBB00187AFF1E0066E891 /* GameControllerExampleTests.m */; };
 		22CFBB0D187B01200066E891 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CFBB0C187B01200066E891 /* GameController.framework */; };
 		22FB3A24187C46B00043EEE3 /* GCEGameBehaviour.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FB3A23187C46B00043EEE3 /* GCEGameBehaviour.m */; };
+		22FB3A2A187C58550043EEE3 /* GCEControllerBehaviour.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FB3A29187C58550043EEE3 /* GCEControllerBehaviour.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		22CFBB0C187B01200066E891 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		22FB3A22187C46B00043EEE3 /* GCEGameBehaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCEGameBehaviour.h; sourceTree = "<group>"; };
 		22FB3A23187C46B00043EEE3 /* GCEGameBehaviour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCEGameBehaviour.m; sourceTree = "<group>"; };
+		22FB3A28187C58550043EEE3 /* GCEControllerBehaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCEControllerBehaviour.h; sourceTree = "<group>"; };
+		22FB3A29187C58550043EEE3 /* GCEControllerBehaviour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCEControllerBehaviour.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 			children = (
 				22519BF7187C2007005A1233 /* GCEDiscoverControllerInterface.h */,
 				22519BF8187C2007005A1233 /* GCEDiscoverControllerInterface.m */,
+				22FB3A28187C58550043EEE3 /* GCEControllerBehaviour.h */,
+				22FB3A29187C58550043EEE3 /* GCEControllerBehaviour.m */,
 			);
 			name = "Game Controller Interface";
 			sourceTree = "<group>";
@@ -284,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22CFBAEC187AFF1E0066E891 /* GCEAppDelegate.m in Sources */,
+				22FB3A2A187C58550043EEE3 /* GCEControllerBehaviour.m in Sources */,
 				22CFBAE8187AFF1E0066E891 /* main.m in Sources */,
 				22519BF1187B02C7005A1233 /* GCEGameViewController.m in Sources */,
 				22519BF9187C2007005A1233 /* GCEDiscoverControllerInterface.m in Sources */,
