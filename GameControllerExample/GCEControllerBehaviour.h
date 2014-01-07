@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <GameController/GameController.h>
+#import "GCEGameBehaviour.h"
 
 @interface GCEControllerBehaviour : NSObject
+
+- (void)setupGameController:(GCController *)controller controllingGame:(GCEGameBehaviour *)gameBehaviour;
 
 @end
