@@ -10,18 +10,20 @@
 
 @interface GCEDiscoverControllerInterface ()
 
-@property (nonatomic,strong) NSTimer *pingForHardwareControllerTimer;
 @property (nonatomic,copy) void (^controllerCallbackSetup)(GCController *gameController);
-@end
 
-const NSTimeInterval hardwareControllerPingTimer = 2.0;
-const NSTimeInterval hardwareControllerPingTolerance = 0.5;
+@end
 
 @implementation GCEDiscoverControllerInterface
 
 - (void)dealloc {
     
-    [_pingForHardwareControllerTimer invalidate];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:GCControllerDidConnectNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:GCControllerDidDisconnectNotification
+                                                  object:nil];
 }
 
 - (void)discoverController:(void (^)(GCController *gameController))controllerCallbackSetup {
@@ -40,8 +42,13 @@ const NSTimeInterval hardwareControllerPingTolerance = 0.5;
 - (void)stop {
     
     NSLog(@"Discovery stopped");
-    [self.pingForHardwareControllerTimer invalidate];
     [GCController stopWirelessControllerDiscovery];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:GCControllerDidConnectNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:GCControllerDidDisconnectNotification
+                                                  object:nil];
 }
 
 - (void)patientlyDiscoverController {
@@ -51,30 +58,24 @@ const NSTimeInterval hardwareControllerPingTolerance = 0.5;
             [self foundController];
         }
     }];
-    
-    [self.pingForHardwareControllerTimer invalidate];
-    self.pingForHardwareControllerTimer = [NSTimer scheduledTimerWithTimeInterval:hardwareControllerPingTimer
-                                                                           target:self
-                                                                         selector:@selector(attemptFindingWiredController)
-                                                                         userInfo:nil
-                                                                          repeats:YES];
-    self.pingForHardwareControllerTimer.tolerance = hardwareControllerPingTolerance;
-}
-
-- (void)attemptFindingWiredController {
-    
-    NSLog(@"Discovery pinged");
-    if ([self hasControllerConnected]) {
-        NSLog(@"Patiently discovered");
-        [self foundController];
-    }
+ 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(foundController)
+                                                 name:GCControllerDidConnectNotification
+                                               object:nil];
 }
 
 - (void)foundController {
+    
+    NSLog(@"Found Controller");
     if (self.controllerCallbackSetup) {
         self.controllerCallbackSetup([[GCController controllers] firstObject]);
     }
     [self stop];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(patientlyDiscoverController)
+                                                 name:GCControllerDidDisconnectNotification
+                                               object:nil];
 }
 
 - (BOOL)hasControllerConnected {
