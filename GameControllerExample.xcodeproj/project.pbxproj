@@ -22,6 +22,7 @@
 		22CFBAFF187AFF1E0066E891 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22CFBAFD187AFF1E0066E891 /* InfoPlist.strings */; };
 		22CFBB01187AFF1E0066E891 /* GameControllerExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CFBB00187AFF1E0066E891 /* GameControllerExampleTests.m */; };
 		22CFBB0D187B01200066E891 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CFBB0C187B01200066E891 /* GameController.framework */; };
+		22FB3A24187C46B00043EEE3 /* GCEGameBehaviour.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FB3A23187C46B00043EEE3 /* GCEGameBehaviour.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		22CFBAFE187AFF1E0066E891 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		22CFBB00187AFF1E0066E891 /* GameControllerExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameControllerExampleTests.m; sourceTree = "<group>"; };
 		22CFBB0C187B01200066E891 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		22FB3A22187C46B00043EEE3 /* GCEGameBehaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCEGameBehaviour.h; sourceTree = "<group>"; };
+		22FB3A23187C46B00043EEE3 /* GCEGameBehaviour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCEGameBehaviour.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +98,8 @@
 		22519BF2187B02DB005A1233 /* Game Logic */ = {
 			isa = PBXGroup;
 			children = (
+				22FB3A22187C46B00043EEE3 /* GCEGameBehaviour.h */,
+				22FB3A23187C46B00043EEE3 /* GCEGameBehaviour.m */,
 			);
 			name = "Game Logic";
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 				22CFBAE8187AFF1E0066E891 /* main.m in Sources */,
 				22519BF1187B02C7005A1233 /* GCEGameViewController.m in Sources */,
 				22519BF9187C2007005A1233 /* GCEDiscoverControllerInterface.m in Sources */,
+				22FB3A24187C46B00043EEE3 /* GCEGameBehaviour.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
