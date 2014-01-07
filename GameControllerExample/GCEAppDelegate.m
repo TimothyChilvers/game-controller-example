@@ -8,6 +8,7 @@
 
 #import "GCEAppDelegate.h"
 #import "GCEGameViewController.h"
+#import <GameController/GameController.h>
 
 @implementation GCEAppDelegate
 
@@ -22,6 +23,11 @@
     
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    
+    [GCController stopWirelessControllerDiscovery];
 }
 
 @end
