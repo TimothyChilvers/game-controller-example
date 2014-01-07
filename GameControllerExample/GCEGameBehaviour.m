@@ -7,14 +7,14 @@
 //
 
 #import "GCEGameBehaviour.h"
+#import "GCEControllerBehaviour.h"
 
 @interface GCEGameBehaviour()
 
 @property (nonatomic,strong) UIDynamicAnimator *animator;
 @property (nonatomic,strong) UIGravityBehavior *gravityBehaviour;
 @property (nonatomic,strong) UICollisionBehavior *collisionBehaviour;
-@property (nonatomic,strong) UIPushBehavior *jumpBehaviour;
-@property (nonatomic,strong) UIPushBehavior *walkBehaviour;
+@property (nonatomic,strong) GCEControllerBehaviour *controllerBehaviour;
 
 @end
 
@@ -22,6 +22,15 @@ const CGVector playerJumpVector = (CGVector){0.0f,-1.0f};
 const CGFloat walkInputMinimumThreshold = 0.1f;
 
 @implementation GCEGameBehaviour
+
+- (instancetype)init {
+    self = [super init];
+    
+    if (self != nil) {
+        _controllerBehaviour = [[GCEControllerBehaviour alloc] init];
+    }
+    return self;
+}
 
 - (BOOL)playerCanJump {
     
@@ -73,6 +82,11 @@ const CGFloat walkInputMinimumThreshold = 0.1f;
     
     self.walkBehaviour = [[UIPushBehavior alloc] initWithItems:@[characterView] mode:UIPushBehaviorModeContinuous];
     [self.animator addBehavior:self.walkBehaviour];
+}
+
+- (void)setupGameController:(GCController *)gameController {
+    
+    [self.controllerBehaviour setupGameController:gameController controllingGame:self];
 }
 
 

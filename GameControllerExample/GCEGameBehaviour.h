@@ -7,13 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <GameController/GameController.h>
 
 @interface GCEGameBehaviour : NSObject
+
+@property (nonatomic,strong) UIPushBehavior *jumpBehaviour;
+@property (nonatomic,strong) UIPushBehavior *walkBehaviour;
 
 -(void)playerJump;
 -(void)playerForceX:(CGFloat)forceX;
 
 - (void)setupEnvironmentPhysicsBehavioursInView:(UIView *)referenceView withPlatforms:(NSArray *)platformViews playerView:(UIView *)playerView;
 - (void)setupActionsForCharacterView:(UIView *)characterView;
+- (void)setupGameController:(GCController *)gameController;
 
 @end
