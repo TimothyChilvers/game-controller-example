@@ -16,12 +16,14 @@
 @property (nonatomic,strong) UILabel *playerCharacter;
 @property (nonatomic,strong) UIGravityBehavior *gravityBehaviour;
 @property (nonatomic,strong) UICollisionBehavior *collisionBehaviour;
+@property (nonatomic,strong) UIPushBehavior *jumpBehaviour;
+@property (nonatomic,strong) UIPushBehavior *walkBehaviour;
 
 @end
 
-const NSInteger platformViewCount = 17;
+const NSInteger platformViewCount = 6;
 const NSInteger platformMinimumSize = 10;
-const NSInteger platformMaximumSize = 88; // Actually +minimum size
+const NSInteger platformMaximumSize = 44; // Actually +minimum size
 const CGFloat platformInsetFromEdges = 22.0f;
 
 @implementation GCEGameViewController
@@ -30,15 +32,21 @@ const CGFloat platformInsetFromEdges = 22.0f;
     [super viewDidLoad];
     
     [self setupPlatformViews];
-    [self setupEnvironmentPhysicsBehaviours];
     [self setupPlayerCharacter];
+    [self setupEnvironmentPhysicsBehaviours];
+    [self setupCharacterActions];
 }
+}
+
+#pragma mark - Game Setup
 
 - (void)setupPlatformViews {
     
     NSMutableArray *tempPlatformViews = [NSMutableArray arrayWithCapacity:platformViewCount];
     
-    CGPoint maxOrigin = {self.view.bounds.size.width - platformInsetFromEdges,self.view.bounds.size.height - platformInsetFromEdges};
+    CGFloat maxOriginConstraint = MIN(self.view.bounds.size.width,self.view.bounds.size.height);
+    
+    CGPoint maxOrigin = {maxOriginConstraint - platformInsetFromEdges,maxOriginConstraint - platformInsetFromEdges};
     
     for (NSInteger i = 0; i < platformViewCount; i++) {
         
@@ -70,11 +78,13 @@ const CGFloat platformInsetFromEdges = 22.0f;
     self.collisionBehaviour.collisionMode = UICollisionBehaviorModeEverything;
     self.collisionBehaviour.translatesReferenceBoundsIntoBoundary = YES;
     
+    [self.gravityBehaviour addItem:self.playerCharacter];
+    [self.collisionBehaviour addItem:self.playerCharacter];
+
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     
     [self.animator addBehavior:self.collisionBehaviour];
     [self.animator addBehavior:self.gravityBehaviour];
-    
 }
 
 - (void)setupPlayerCharacter {
@@ -82,11 +92,25 @@ const CGFloat platformInsetFromEdges = 22.0f;
     self.playerCharacter = [[UILabel alloc] init];
     self.playerCharacter.text = @"Jeff";
     [self.playerCharacter sizeToFit];
+    
+    CGFloat minimumScreenSize = MIN(self.view.bounds.size.width,self.view.bounds.size.height);
+    self.playerCharacter.center = (CGPoint){minimumScreenSize * .5f, minimumScreenSize * .5f};
+    
     self.playerCharacter.backgroundColor = [UIColor greenColor];
     [self.view addSubview:self.playerCharacter];
 
-    [self.gravityBehaviour addItem:self.playerCharacter];
-    [self.collisionBehaviour addItem:self.playerCharacter];
+}
+
+- (void)setupCharacterActions {
+    
+    self.jumpBehaviour = [[UIPushBehavior alloc] initWithItems:@[self.playerCharacter] mode:UIPushBehaviorModeInstantaneous];
+    [self.jumpBehaviour setPushDirection:playerJumpVector];
+    [self.animator addBehavior:self.jumpBehaviour];
+    
+    self.walkBehaviour = [[UIPushBehavior alloc] initWithItems:@[self.playerCharacter] mode:UIPushBehaviorModeContinuous];
+    [self.animator addBehavior:self.walkBehaviour];
+
+}
 }
 
 @end
