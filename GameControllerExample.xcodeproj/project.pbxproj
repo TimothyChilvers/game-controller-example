@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		22519BF1187B02C7005A1233 /* GCEGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22519BF0187B02C7005A1233 /* GCEGameViewController.m */; };
+		22519BF9187C2007005A1233 /* GCEDiscoverControllerInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 22519BF8187C2007005A1233 /* GCEDiscoverControllerInterface.m */; };
 		22CFBADC187AFF1E0066E891 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CFBADB187AFF1E0066E891 /* Foundation.framework */; };
 		22CFBADE187AFF1E0066E891 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CFBADD187AFF1E0066E891 /* CoreGraphics.framework */; };
 		22CFBAE0187AFF1E0066E891 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CFBADF187AFF1E0066E891 /* UIKit.framework */; };
@@ -36,6 +37,8 @@
 /* Begin PBXFileReference section */
 		22519BEF187B02C7005A1233 /* GCEGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCEGameViewController.h; sourceTree = "<group>"; };
 		22519BF0187B02C7005A1233 /* GCEGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCEGameViewController.m; sourceTree = "<group>"; };
+		22519BF7187C2007005A1233 /* GCEDiscoverControllerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCEDiscoverControllerInterface.h; sourceTree = "<group>"; };
+		22519BF8187C2007005A1233 /* GCEDiscoverControllerInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCEDiscoverControllerInterface.m; sourceTree = "<group>"; };
 		22CFBAD8187AFF1E0066E891 /* GameControllerExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameControllerExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22CFBADB187AFF1E0066E891 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		22CFBADD187AFF1E0066E891 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -96,6 +99,15 @@
 			name = "Game Logic";
 			sourceTree = "<group>";
 		};
+		22519BF6187C1FF0005A1233 /* Game Controller Interface */ = {
+			isa = PBXGroup;
+			children = (
+				22519BF7187C2007005A1233 /* GCEDiscoverControllerInterface.h */,
+				22519BF8187C2007005A1233 /* GCEDiscoverControllerInterface.m */,
+			);
+			name = "Game Controller Interface";
+			sourceTree = "<group>";
+		};
 		22CFBACF187AFF1E0066E891 = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +142,7 @@
 		22CFBAE1187AFF1E0066E891 /* GameControllerExample */ = {
 			isa = PBXGroup;
 			children = (
+				22519BF6187C1FF0005A1233 /* Game Controller Interface */,
 				22519BF2187B02DB005A1233 /* Game Logic */,
 				22519BEE187B02B5005A1233 /* Game View Controller */,
 				22CFBAEA187AFF1E0066E891 /* GCEAppDelegate.h */,
@@ -268,6 +281,7 @@
 				22CFBAEC187AFF1E0066E891 /* GCEAppDelegate.m in Sources */,
 				22CFBAE8187AFF1E0066E891 /* main.m in Sources */,
 				22519BF1187B02C7005A1233 /* GCEGameViewController.m in Sources */,
+				22519BF9187C2007005A1233 /* GCEDiscoverControllerInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
