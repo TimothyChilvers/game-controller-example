@@ -58,7 +58,7 @@ const CGFloat platformInsetFromEdges = 22.0f;
 
     __weak typeof(self) weakSelf = self;
     [self.controllerDiscoveryInterface discoverController:^(GCController *gameController) {
-        [weakSelf configureController:gameController];
+        [weakSelf.gameBehaviour setupGameController:gameController];
     }];
 }
 
@@ -68,24 +68,7 @@ const CGFloat platformInsetFromEdges = 22.0f;
     [self.controllerDiscoveryInterface stop];
 }
 
-#pragma mark - Controller Setup
-
-
-- (void)configureController:(GCController *)gameController {
-    
-    gameController = [[GCController controllers] firstObject];
-    gameController.gamepad.buttonA.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
-        if (pressed) {
-            [self.gameBehaviour playerJump];
-        }
-    };
-    gameController.gamepad.dpad.valueChangedHandler = ^ (GCControllerDirectionPad *dpad, float xValue, float yValue) {
-        NSLog(@"Changed xValue = %f",xValue);
-        [self.gameBehaviour playerForceX:xValue];
-    };
-}
-
-#pragma mark - Game Setup
+#pragma mark - View Setup
 
 - (void)setupPlatformViews {
     
@@ -113,6 +96,7 @@ const CGFloat platformInsetFromEdges = 22.0f;
         
         platformView.backgroundColor = color;
     }
+    
     self.platformViews = [NSArray arrayWithArray:tempPlatformViews];
 }
 
