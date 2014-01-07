@@ -89,11 +89,11 @@
 			name = "Game View Controller";
 			sourceTree = "<group>";
 		};
-		22519BF2187B02DB005A1233 /* Game Views */ = {
+		22519BF2187B02DB005A1233 /* Game Logic */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = "Game Views";
+			name = "Game Logic";
 			sourceTree = "<group>";
 		};
 		22CFBACF187AFF1E0066E891 = {
@@ -130,7 +130,7 @@
 		22CFBAE1187AFF1E0066E891 /* GameControllerExample */ = {
 			isa = PBXGroup;
 			children = (
-				22519BF2187B02DB005A1233 /* Game Views */,
+				22519BF2187B02DB005A1233 /* Game Logic */,
 				22519BEE187B02B5005A1233 /* Game View Controller */,
 				22CFBAEA187AFF1E0066E891 /* GCEAppDelegate.h */,
 				22CFBAEB187AFF1E0066E891 /* GCEAppDelegate.m */,
@@ -326,7 +326,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Timothy Chilvers (W5WWY522FA)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -344,6 +344,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "54D73A00-6DA8-4D95-964E-CDD600B85424";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -365,7 +366,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Timothy Chilvers (W5WWY522FA)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -376,6 +377,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "54D73A00-6DA8-4D95-964E-CDD600B85424";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
