@@ -25,19 +25,15 @@ const NSTimeInterval hardwareControllerPingTolerance = 0.5;
 }
 
 - (void)discoverController:(void (^)(GCController *gameController))controllerCallbackSetup {
+
+    self.controllerCallbackSetup = controllerCallbackSetup;
     
-    if ([[GCController controllers] count] == 0) {
-        if ([[GCController controllers] count] > 0) {
-            NSLog(@"Discovery finished on first pass");
-            controllerCallbackSetup([[GCController controllers] firstObject]);
-        } else {
-            NSLog(@"Discovery happening patiently");
-            [self patientlyDiscoverController:controllerCallbackSetup];
-        }
+    if ([self hasControllerConnected]) {
+        NSLog(@"Discovery finished on first pass");
+        [self foundController];
     } else {
-        if (controllerCallbackSetup) {
-            controllerCallbackSetup([[GCController controllers] firstObject]);
-        }
+        NSLog(@"Discovery happening patiently");
+        [self patientlyDiscoverController];
     }
 }
 
@@ -48,16 +44,15 @@ const NSTimeInterval hardwareControllerPingTolerance = 0.5;
     [GCController stopWirelessControllerDiscovery];
 }
 
-- (void)patientlyDiscoverController:(void (^)(GCController *gameController))controllerCallbackSetup {
+- (void)patientlyDiscoverController {
     
     [GCController startWirelessControllerDiscoveryWithCompletionHandler:^{
-        if (controllerCallbackSetup && [[GCController controllers] count] > 0) {
-            controllerCallbackSetup([[GCController controllers] firstObject]);
+        if ([self hasControllerConnected]) {
+            [self foundController];
         }
     }];
     
     [self.pingForHardwareControllerTimer invalidate];
-    self.controllerCallbackSetup = controllerCallbackSetup;
     self.pingForHardwareControllerTimer = [NSTimer scheduledTimerWithTimeInterval:hardwareControllerPingTimer
                                                                            target:self
                                                                          selector:@selector(attemptFindingWiredController)
@@ -69,14 +64,21 @@ const NSTimeInterval hardwareControllerPingTolerance = 0.5;
 - (void)attemptFindingWiredController {
     
     NSLog(@"Discovery pinged");
-    if ([[GCController controllers] count] > 0) {
+    if ([self hasControllerConnected]) {
         NSLog(@"Patiently discovered");
-        [self.pingForHardwareControllerTimer invalidate];
-        if (self.controllerCallbackSetup) {
-            self.controllerCallbackSetup([[GCController controllers] firstObject]);
-        }
-        [GCController stopWirelessControllerDiscovery];
+        [self foundController];
     }
+}
+
+- (void)foundController {
+    if (self.controllerCallbackSetup) {
+        self.controllerCallbackSetup([[GCController controllers] firstObject]);
+    }
+    [self stop];
+}
+
+- (BOOL)hasControllerConnected {
+    return [[GCController controllers] count] > 0;
 }
 
 @end
