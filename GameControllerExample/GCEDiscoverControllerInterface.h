@@ -11,5 +11,7 @@
 
 @interface GCEDiscoverControllerInterface : NSObject
 
+- (void)discoverController:(void (^)(GCController *gameController))controllerCallbackSetup;
+- (void)stop;
 
 @end
