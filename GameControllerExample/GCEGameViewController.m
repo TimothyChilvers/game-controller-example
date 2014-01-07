@@ -8,16 +8,15 @@
 
 #import "GCEGameViewController.h"
 #import <GameController/GameController.h>
+#import "GCEDiscoverControllerInterface.h"
+#import "GCEGameBehaviour.h"
 
 @interface GCEGameViewController ()
 
 @property (nonatomic,strong) NSArray *platformViews;
-@property (nonatomic,strong) UIDynamicAnimator *animator;
 @property (nonatomic,strong) UILabel *playerCharacter;
-@property (nonatomic,strong) UIGravityBehavior *gravityBehaviour;
-@property (nonatomic,strong) UICollisionBehavior *collisionBehaviour;
-@property (nonatomic,strong) UIPushBehavior *jumpBehaviour;
-@property (nonatomic,strong) UIPushBehavior *walkBehaviour;
+@property (nonatomic,strong) GCEDiscoverControllerInterface *controllerDiscoveryInterface;
+@property (nonatomic,strong) GCEGameBehaviour *gameBehaviour;
 
 @end
 
@@ -28,14 +27,62 @@ const CGFloat platformInsetFromEdges = 22.0f;
 
 @implementation GCEGameViewController
 
+- (id)init {
+    self = [super init];
+    
+    if (self != nil) {
+        _controllerDiscoveryInterface = [[GCEDiscoverControllerInterface alloc] init];
+        _gameBehaviour = [[GCEGameBehaviour alloc] init];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    
+    [_controllerDiscoveryInterface stop];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self setupPlatformViews];
     [self setupPlayerCharacter];
-    [self setupEnvironmentPhysicsBehaviours];
-    [self setupCharacterActions];
+    [self.gameBehaviour setupEnvironmentPhysicsBehavioursInView:self.view
+                                                  withPlatforms:self.platformViews
+                                                     playerView:self.playerCharacter];
+    [self.gameBehaviour setupActionsForCharacterView:self.playerCharacter];
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    __weak typeof(self) weakSelf = self;
+    [self.controllerDiscoveryInterface discoverController:^(GCController *gameController) {
+        [weakSelf configureController:gameController];
+    }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.controllerDiscoveryInterface stop];
+}
+
+#pragma mark - Controller Setup
+
+
+- (void)configureController:(GCController *)gameController {
+    
+    gameController = [[GCController controllers] firstObject];
+    gameController.gamepad.buttonA.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+        if (pressed) {
+            [self.gameBehaviour playerJump];
+        }
+    };
+    gameController.gamepad.dpad.valueChangedHandler = ^ (GCControllerDirectionPad *dpad, float xValue, float yValue) {
+        NSLog(@"Changed xValue = %f",xValue);
+        [self.gameBehaviour playerForceX:xValue];
+    };
 }
 
 #pragma mark - Game Setup
@@ -69,23 +116,6 @@ const CGFloat platformInsetFromEdges = 22.0f;
     self.platformViews = [NSArray arrayWithArray:tempPlatformViews];
 }
 
-- (void)setupEnvironmentPhysicsBehaviours {
-    
-    self.gravityBehaviour = [[UIGravityBehavior alloc] initWithItems:self.platformViews];
-    
-    
-    self.collisionBehaviour = [[UICollisionBehavior alloc] initWithItems:self.platformViews];
-    self.collisionBehaviour.collisionMode = UICollisionBehaviorModeEverything;
-    self.collisionBehaviour.translatesReferenceBoundsIntoBoundary = YES;
-    
-    [self.gravityBehaviour addItem:self.playerCharacter];
-    [self.collisionBehaviour addItem:self.playerCharacter];
-
-    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
-    
-    [self.animator addBehavior:self.collisionBehaviour];
-    [self.animator addBehavior:self.gravityBehaviour];
-}
 
 - (void)setupPlayerCharacter {
     
@@ -98,19 +128,7 @@ const CGFloat platformInsetFromEdges = 22.0f;
     
     self.playerCharacter.backgroundColor = [UIColor greenColor];
     [self.view addSubview:self.playerCharacter];
-
 }
 
-- (void)setupCharacterActions {
-    
-    self.jumpBehaviour = [[UIPushBehavior alloc] initWithItems:@[self.playerCharacter] mode:UIPushBehaviorModeInstantaneous];
-    [self.jumpBehaviour setPushDirection:playerJumpVector];
-    [self.animator addBehavior:self.jumpBehaviour];
-    
-    self.walkBehaviour = [[UIPushBehavior alloc] initWithItems:@[self.playerCharacter] mode:UIPushBehaviorModeContinuous];
-    [self.animator addBehavior:self.walkBehaviour];
-
-}
-}
 
 @end
