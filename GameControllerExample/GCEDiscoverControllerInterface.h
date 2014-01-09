@@ -11,7 +11,7 @@
 
 @interface GCEDiscoverControllerInterface : NSObject
 
-- (void)discoverController:(void (^)(GCController *gameController))controllerCallbackSetup;
+- (void)discoverController:(void (^)(GCController *gameController))controllerCallbackSetup disconnectedCallback:(void (^)(void))controllerDisconnectedCallback;
 - (void)stop;
 
 @end

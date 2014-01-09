@@ -11,7 +11,7 @@
 @interface GCEDiscoverControllerInterface ()
 
 @property (nonatomic,copy) void (^controllerCallbackSetup)(GCController *gameController);
-
+@property (nonatomic,copy) void (^controllerDisconnectedCallback)(void);
 @end
 
 @implementation GCEDiscoverControllerInterface
@@ -26,9 +26,10 @@
                                                   object:nil];
 }
 
-- (void)discoverController:(void (^)(GCController *gameController))controllerCallbackSetup {
+- (void)discoverController:(void (^)(GCController *gameController))controllerCallbackSetup disconnectedCallback:(void (^)(void))controllerDisconnectedCallback{
 
     self.controllerCallbackSetup = controllerCallbackSetup;
+    self.controllerDisconnectedCallback = controllerDisconnectedCallback;
     
     if ([self hasControllerConnected]) {
         NSLog(@"Discovery finished on first pass");
@@ -51,13 +52,17 @@
                                                   object:nil];
 }
 
+- (void)controllerDisconnected {
+    
+    if (self.controllerDisconnectedCallback){
+        self.controllerDisconnectedCallback();
+    }
+    [self patientlyDiscoverController];
+}
+
 - (void)patientlyDiscoverController {
     
-    [GCController startWirelessControllerDiscoveryWithCompletionHandler:^{
-        if ([self hasControllerConnected]) {
-            [self foundController];
-        }
-    }];
+    [GCController startWirelessControllerDiscoveryWithCompletionHandler:nil];
  
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(foundController)
@@ -66,14 +71,14 @@
 }
 
 - (void)foundController {
-    
     NSLog(@"Found Controller");
+
     if (self.controllerCallbackSetup) {
         self.controllerCallbackSetup([[GCController controllers] firstObject]);
     }
     [self stop];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(patientlyDiscoverController)
+                                             selector:@selector(controllerDisconnected)
                                                  name:GCControllerDidDisconnectNotification
                                                object:nil];
 }

@@ -17,7 +17,7 @@
 @property (nonatomic,strong) UILabel *playerCharacter;
 @property (nonatomic,strong) GCEDiscoverControllerInterface *controllerDiscoveryInterface;
 @property (nonatomic,strong) GCEGameBehaviour *gameBehaviour;
-
+@property (nonatomic,strong) UILabel *controllerLabel;
 @end
 
 const NSInteger platformViewCount = 6;
@@ -45,20 +45,27 @@ const CGFloat platformInsetFromEdges = 22.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupControllerLabel];
     [self setupPlatformViews];
     [self setupPlayerCharacter];
     [self.gameBehaviour setupEnvironmentPhysicsBehavioursInView:self.view
                                                   withPlatforms:self.platformViews
                                                      playerView:self.playerCharacter];
     [self.gameBehaviour setupActionsForCharacterView:self.playerCharacter];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
+
     __weak typeof(self) weakSelf = self;
+    
     [self.controllerDiscoveryInterface discoverController:^(GCController *gameController) {
         [weakSelf.gameBehaviour setupGameController:gameController];
+        self.controllerLabel.text = @"Connected";
+    } disconnectedCallback:^{
+        self.controllerLabel.text = @"Disconnected";
     }];
 }
 
@@ -114,5 +121,14 @@ const CGFloat platformInsetFromEdges = 22.0f;
     [self.view addSubview:self.playerCharacter];
 }
 
+- (void)setupControllerLabel {
+    
+    self.controllerLabel = [[UILabel alloc] init];
+    self.controllerLabel.text = @"Waiting for controller";
+    [self.controllerLabel sizeToFit];
+    self.controllerLabel.center = (CGPoint){CGRectGetMidX(self.view.bounds),CGRectGetMidY(self.controllerLabel.frame) + 20.f};
+    self.controllerLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [self.view addSubview:self.controllerLabel];
+}
 
 @end
