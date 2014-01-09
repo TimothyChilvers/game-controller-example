@@ -8,6 +8,8 @@
 
 #import "GCEControllerBehaviour.h"
 
+NSString *GCEAButtonKey = @"GCEAButtonKey";
+
 @interface GCEControllerBehaviour()
 
 @property (nonatomic,strong) NSMutableDictionary *buttonDownStates;
@@ -38,12 +40,12 @@
     
     aButton.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
         
-        BOOL buttonHasBeenReleased = [weakSelf.buttonDownStates[@"A"] boolValue] ? NO : YES;
+        BOOL buttonHasBeenReleased = [weakSelf.buttonDownStates[GCEAButtonKey] boolValue] ? NO : YES;
         
         if (pressed && buttonHasBeenReleased) {
             [gameBehaviour playerJump];
         }
-        weakSelf.buttonDownStates[@"A"] = @(pressed);
+        weakSelf.buttonDownStates[GCEAButtonKey] = @(pressed);
     };
 
     GCControllerDirectionPad *dpad = nil;
