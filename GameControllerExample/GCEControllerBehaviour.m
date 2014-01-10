@@ -8,7 +8,7 @@
 
 #import "GCEControllerBehaviour.h"
 
-NSString *GCEAButtonKey = @"GCEAButtonKey";
+NSString *const GCEAButtonKey = @"GCEAButtonKey";
 
 @interface GCEControllerBehaviour()
 
@@ -40,9 +40,9 @@ NSString *GCEAButtonKey = @"GCEAButtonKey";
     
     aButton.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
         
-        BOOL buttonHasBeenReleased = [weakSelf.buttonDownStates[GCEAButtonKey] boolValue] ? NO : YES;
+        BOOL firstExecutionForPress = [weakSelf.buttonDownStates[GCEAButtonKey] boolValue] ? NO : YES;
         
-        if (pressed && buttonHasBeenReleased) {
+        if (pressed && firstExecutionForPress) {
             [gameBehaviour playerJump];
         }
         weakSelf.buttonDownStates[GCEAButtonKey] = @(pressed);
