@@ -8,7 +8,7 @@
 
 #import "GCEControllerBehaviour.h"
 
-NSString *const GCEAButtonKey = @"GCEAButtonKey";
+NSString *const GCEJumpButtonKey = @"GCEJumpButtonKey";
 
 @interface GCEControllerBehaviour()
 
@@ -31,21 +31,21 @@ NSString *const GCEAButtonKey = @"GCEAButtonKey";
     
     __weak typeof(self) weakSelf = self;
     
-    GCControllerButtonInput *aButton = nil;
+    GCControllerButtonInput *jumpButton = nil;
     if (controller.gamepad) {
-        aButton = controller.gamepad.buttonA;
+        jumpButton = controller.gamepad.buttonA;
     } else if (controller.extendedGamepad) {
-        aButton = controller.extendedGamepad.buttonA;
+        jumpButton = controller.extendedGamepad.buttonA;
     }
     
-    aButton.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+    jumpButton.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
         
-        BOOL firstExecutionForPress = [weakSelf.buttonDownStates[GCEAButtonKey] boolValue] ? NO : YES;
+        BOOL firstExecutionForPress = [weakSelf.buttonDownStates[GCEJumpButtonKey] boolValue] ? NO : YES;
         
         if (pressed && firstExecutionForPress) {
             [gameBehaviour playerJump];
         }
-        weakSelf.buttonDownStates[GCEAButtonKey] = @(pressed);
+        weakSelf.buttonDownStates[GCEJumpButtonKey] = @(pressed);
     };
 
     GCControllerDirectionPad *dpad = nil;
