@@ -9,19 +9,29 @@
 #import "GCEGameBehaviour.h"
 #import "GCEControllerBehaviour.h"
 
+const CGFloat chargeMaxValue = 1.0f;
+const CGFloat chargeStartValue = 0.f;
+const CGFloat chargeStepValue = 0.05f;
+const NSTimeInterval chargeTickInterval = 1.0/60.0;
+
 @interface GCEGameBehaviour()
 
 @property (nonatomic,strong) UIDynamicAnimator *animator;
 @property (nonatomic,strong) UIGravityBehavior *gravityBehaviour;
 @property (nonatomic,strong) UICollisionBehavior *collisionBehaviour;
 @property (nonatomic,strong) GCEControllerBehaviour *controllerBehaviour;
-
+@property (nonatomic,strong) NSTimer *chargeTimer;
+@property (nonatomic,weak) UIView *playerView;
 @end
 
 const CGVector playerJumpVector = (CGVector){0.0f,-1.0f};
 const CGFloat walkInputMinimumThreshold = 0.1f;
 
 @implementation GCEGameBehaviour
+
+- (void)dealloc {
+    [_chargeTimer invalidate];
+}
 
 - (instancetype)init {
     self = [super init];
@@ -56,6 +66,32 @@ const CGFloat walkInputMinimumThreshold = 0.1f;
     }
 }
 
+-(void)playerStartCharge {
+
+    self.playerView.backgroundColor = [UIColor colorWithRed:chargeStartValue green:chargeStartValue blue:chargeStartValue alpha:1.0f];
+    self.chargeTimer = [NSTimer scheduledTimerWithTimeInterval:chargeTickInterval target:self selector:@selector(playerChargeTick) userInfo:nil repeats:YES];
+}
+
+-(void)playerChargeTick {
+    
+    UIColor *currentColor = self.playerView.backgroundColor;
+    CGFloat red, green, blue, alpha;
+    [currentColor getRed:&red green:&green blue:&blue alpha:&alpha];
+    red += chargeStepValue;
+    green += chargeStepValue;
+    self.playerView.backgroundColor = [UIColor colorWithRed:MAX(red, chargeMaxValue)
+                                                      green:MAX(green, chargeMaxValue)
+                                                       blue:chargeMaxValue
+                                                      alpha:1.0f];
+}
+
+-(void)playerChargeUnleash {
+    
+    [self.chargeTimer invalidate];
+    self.playerView.backgroundColor = [UIColor blueColor];
+}
+
+
 - (void)setupEnvironmentPhysicsBehavioursInView:(UIView *)referenceView withPlatforms:(NSArray *)platformViews playerView:(UIView *)playerView {
     
     self.gravityBehaviour = [[UIGravityBehavior alloc] initWithItems:platformViews];
@@ -72,6 +108,8 @@ const CGFloat walkInputMinimumThreshold = 0.1f;
     
     [self.animator addBehavior:self.collisionBehaviour];
     [self.animator addBehavior:self.gravityBehaviour];
+    
+    self.playerView = playerView;
 }
 
 - (void)setupActionsForCharacterView:(UIView *)characterView {

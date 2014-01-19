@@ -14,8 +14,10 @@
 @property (nonatomic,strong) UIPushBehavior *jumpBehaviour;
 @property (nonatomic,strong) UIPushBehavior *walkBehaviour;
 
--(void)playerJump;
--(void)playerForceX:(CGFloat)forceX;
+- (void)playerJump;
+- (void)playerForceX:(CGFloat)forceX;
+- (void)playerStartCharge;
+- (void)playerChargeUnleash;
 
 - (void)setupEnvironmentPhysicsBehavioursInView:(UIView *)referenceView withPlatforms:(NSArray *)platformViews playerView:(UIView *)playerView;
 - (void)setupActionsForCharacterView:(UIView *)characterView;

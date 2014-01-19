@@ -9,6 +9,7 @@
 #import "GCEControllerBehaviour.h"
 
 NSString *const GCEJumpButtonKey = @"GCEJumpButtonKey";
+NSString *const GCEChargeButtonKey = @"GCEChargeButtonKey";
 
 @interface GCEControllerBehaviour()
 
@@ -48,6 +49,27 @@ NSString *const GCEJumpButtonKey = @"GCEJumpButtonKey";
         weakSelf.buttonDownStates[GCEJumpButtonKey] = @(pressed);
     };
 
+    GCControllerButtonInput *chargeButton = nil;
+    if (controller.gamepad) {
+        chargeButton = controller.gamepad.leftShoulder;
+    } else if (controller.extendedGamepad) {
+        chargeButton = controller.extendedGamepad.leftShoulder;
+    }
+    
+    chargeButton.valueChangedHandler = ^(GCControllerButtonInput *button, float value, BOOL pressed) {
+
+        BOOL changedPressedSinceLastExecution = [weakSelf.buttonDownStates[GCEJumpButtonKey] boolValue] ? NO : YES;
+        
+        if (pressed && changedPressedSinceLastExecution) {
+            [gameBehaviour playerStartCharge];
+        } else if (!pressed && !changedPressedSinceLastExecution){
+            [gameBehaviour playerChargeUnleash];
+        }
+        
+        weakSelf.buttonDownStates[GCEJumpButtonKey] = @(pressed);
+
+    };
+    
     GCControllerDirectionPad *dpad = nil;
     if (controller.gamepad) {
         dpad = controller.gamepad.dpad;
